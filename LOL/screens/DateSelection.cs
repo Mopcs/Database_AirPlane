@@ -4,7 +4,8 @@ namespace LOL
     {
         public Element[] elements =
         {
-            new Button("Беги!")
+            new InputText("Введите дату", true),
+            new Button("Продолжить")
         };
         
         private int selectedElemIndex = 0;
@@ -34,6 +35,12 @@ namespace LOL
                         break;
                 case ConsoleKey.Escape:
                     App.openMainMenu();
+                    break;
+                case ConsoleKey.Enter:
+                    if (elements[selectedElemIndex] is Button)
+                    {
+                        App.openPlaceSelectionScreen();
+                    }
                     break;
                 default:
                     var elem = elements[selectedElemIndex];

@@ -34,5 +34,9 @@
         public static void openDateSelectionScreen() {
             activeScreen = new DateSelection();
         }
+        public static void openPlaceSelectionScreen()
+        {
+            activeScreen = new PlaceSelection();
+        }
     }
 }

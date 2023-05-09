@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -473,6 +474,24 @@ namespace Booking.DataBase
                 }
             }
             Saving(_data);
+        }
+
+        public static void UserInfo(Data[] _data, string login) //вывод информации о конкретном человеке по логину
+        {
+            int[] result = new int[_data.Length];
+
+            for (int i = 0; i < _data.Length; i++)
+            {
+                string LoginCompare = _data[i].GetLogin().login;
+
+                result[i] = Convert.ToInt32(login.Equals(LoginCompare));
+
+                if (result[i] == 1)
+                {
+                    _data[i].Print();
+                    break;
+                }
+            }
         }
 
         //ФУНКЦИИ, КОТОРЫЕ ВЫ СКАЗАЛИ ДОБАВИТЬ

@@ -209,7 +209,7 @@ namespace Booking.DataBase
             }
             Console.Clear();
             Console.WriteLine("Данные успешно добавлены!");     
-        }
+        } //уже не нужно
 
         public static void Reading(ref Data[] _data) //чтение 
         {
@@ -357,241 +357,122 @@ namespace Booking.DataBase
             }
         }
 
-        public static void ChangeSeatAdmin(Data[] _data) //меняем место в самолете
+        public static void ChangeUserInitialsAdmin(Data[] _data, string login, string _surname, string _name, string _patronymic) //меняем инициалы пользователя
         {
-            Console.WriteLine("У какого пользователя вы хотите совершить изменения?");
-            Console.WriteLine($"Введите цифру от 1 до {_data.Length}");
+            int[] result = new int[_data.Length];
 
-            int _n = Convert.ToInt32(Console.ReadLine());
-            _n--;
-
-            Console.Clear();
-
-            if (_n >= 0 && _n < _data.Length)
+            for (int i = 0; i < _data.Length; i++)
             {
-                User user = new User();
-                Seat seat = new Seat();
-                Time time = new Time();
-                Food food = new Food();
+                string LoginCompare = _data[i].GetLogin().login;
 
-                user.login = _data[_n].GetLogin().login;
-                user.password = _data[_n].GetPassword().password;
+                result[i] = Convert.ToInt32(login.Equals(LoginCompare));
 
-                user.surname = _data[_n].GetUser().surname;
-                user.name = _data[_n].GetUser().name;
-                user.patronymic = _data[_n].GetUser().patronymic;
-
-                user.day = _data[_n].GetDate().day;
-                user.month = _data[_n].GetDate().month;
-                user.year = _data[_n].GetDate().year;
-
-                food.IDeat = _data[_n].GetFood().IDeat;
-                time.clock = _data[_n].GetTime().clock;
-
-                Console.Write("Введите место: ");
-                seat.row = Console.ReadLine();
-                seat.boon = Console.ReadLine();
-                seat.comfortable = Console.ReadLine();
-
-                _data[_n].Entry(user, seat, time, food);
-
-                Console.Clear();
-                Console.WriteLine($"Данные элемента {_n + 1} изменены!");
+                if (result[i] == 1)
+                {
+                    _data[i].user.surname = _surname;
+                    _data[i].user.name = _name;
+                    _data[i].user.patronymic = _patronymic;
+                    Saving(_data);
+                    break;
+                }
             }
-            else
-            {
-                Console.WriteLine("Неверный ввод информации!");
-            }
+
         }
 
-        public static void ChangeUserInitialsAdmin(Data[] _data) //меняем инициалы пользователя
+        public static void ChangeUserDateAdmin(Data[] _data, string login, int _day, int _month, int _year) //меняем дату рождения пользователя
         {
-            Console.WriteLine("У какого пользователя вы хотите совершить изменения?");
-            Console.WriteLine($"Введите цифру от 1 до {_data.Length}");
+            int[] result = new int[_data.Length];
 
-            int _n = Convert.ToInt32(Console.ReadLine());
-            _n--;
-
-            Console.Clear();
-
-            if (_n >= 0 && _n < _data.Length)
+            for (int i = 0; i < _data.Length; i++)
             {
-                User user = new User();
-                Seat seat = new Seat();
-                Time time = new Time();
-                Food food = new Food();
+                string LoginCompare = _data[i].GetLogin().login;
 
-                user.login = _data[_n].GetLogin().login;
-                user.password = _data[_n].GetPassword().password;
+                result[i] = Convert.ToInt32(login.Equals(LoginCompare));
 
-                user.day = _data[_n].GetDate().day;
-                user.month = _data[_n].GetDate().month;
-                user.year = _data[_n].GetDate().year;
-
-                seat.row = _data[_n].GetSeat().row;
-                seat.boon = _data[_n].GetSeat().boon;
-                seat.comfortable = _data[_n].GetSeat().comfortable;
-
-                time.clock = _data[_n].GetTime().clock;
-                food.IDeat = _data[_n].GetFood().IDeat;
-
-                Console.Write("Введите ФИО: ");
-                user.surname = Console.ReadLine();
-                user.name = Console.ReadLine();
-                user.patronymic = Console.ReadLine();
-
-                _data[_n].Entry(user, seat, time, food);
-
-                Console.Clear();
-                Console.WriteLine($"Данные элемента {_n + 1} изменены!");
-            }
-            else
-            {
-                Console.WriteLine("Неверный ввод информации!");
+                if (result[i] == 1)
+                {
+                    _data[i].user.day = _day;
+                    _data[i].user.month = _month;
+                    _data[i].user.year = _year;
+                    Saving(_data);
+                    break;
+                }
             }
         }
-
-        public static void ChangeUserDateAdmin(Data[] _data) //меняем дату рождения пользователя
+        
+        public static void SortingInitialsAdmin(Data[] _data) //сортировка данных по фамилии
         {
-            Console.WriteLine("У какого пользователя вы хотите совершить изменения?");
-            Console.WriteLine($"Введите цифру от 1 до {_data.Length}");
-
-            int _n = Convert.ToInt32(Console.ReadLine());
-            _n--;
-
-            Console.Clear();
-
-            if (_n >= 0 && _n < _data.Length)
-            {
-                User user = new User();
-                Seat seat = new Seat();
-                Time time = new Time();
-                Food food = new Food();
-
-                user.login = _data[_n].GetLogin().login;
-                user.password = _data[_n].GetPassword().password;
-
-                user.surname = _data[_n].GetUser().surname;
-                user.name = _data[_n].GetUser().name;
-                user.patronymic = _data[_n].GetUser().patronymic;
-
-                user.day = _data[_n].GetDate().day;
-                user.month = _data[_n].GetDate().month;
-                user.year = _data[_n].GetDate().year;
-
-                seat.row = _data[_n].GetSeat().row;
-                seat.boon = _data[_n].GetSeat().boon;
-                seat.comfortable = _data[_n].GetSeat().comfortable;
-
-                time.clock = _data[_n].GetTime().clock;
-                food.IDeat = _data[_n].GetFood().IDeat;
-
-                Console.Write("Введите дату рождения: ");
-                user.day = Convert.ToInt32(Console.ReadLine());
-                user.month = Convert.ToInt32(Console.ReadLine());
-                user.year = Convert.ToInt32(Console.ReadLine());
-
-                _data[_n].Entry(user, seat, time, food);
-
-                Console.Clear();
-                Console.WriteLine($"Данные элемента {_n + 1} изменены!");
-            }
-            else
-            {
-                Console.WriteLine("Неверный ввод информации!");
-            }
-        }
-
-        public static void Sorting(Data[] _data) //сортировка данных
-        {
-            //выбираем способ сортировки данных
-            Console.Write("(1) По фамилии \n" +
-                "(2) По году рождения \n" +
-                "(3) По месту в самолете \n" +
-                "(4) По классу удобства в самолете \n" +
-                "Ваш выбор: ");
-
-            int action = Convert.ToInt32(Console.ReadLine());
             Data buf_data;
-
-            switch (action)
+            for (int i = 0; i < _data.Length; i++)
             {
-                case 1:
-                    for (int i = 0; i < _data.Length; i++)
+                for (int j = i + 1; j < _data.Length; j++)
+                {
+                    int result = String.Compare(_data[i].GetUser().surname, _data[j].GetUser().surname);
+                    if (result > 0)
                     {
-                        for (int j = i + 1; j < _data.Length; j++)
-                        {
-                            int result = String.Compare(_data[i].GetUser().surname, _data[j].GetUser().surname);
-                            if (result > 0)
-                            {
-                                buf_data = _data[i];
-                                _data[i] = _data[j];
-                                _data[j] = buf_data;
-                            }
-                        }
+                        buf_data = _data[i];
+                        _data[i] = _data[j];
+                        _data[j] = buf_data;
                     }
-                    Saving(_data);
-                    Console.Clear();
-                    Console.WriteLine("Данные отсортированы по фамилии!");
-                    break;
-                case 2:
-                    for (int i = 0; i < _data.Length; i++)
-                    {
-                        for (int j = i + 1; j < _data.Length; j++)
-                        {
-                            if (_data[i].GetDate().year > _data[j].GetDate().year)
-                            {
-                                buf_data = _data[i];
-                                _data[i] = _data[j];
-                                _data[j] = buf_data;
-                            }
-                        }
-                    }
-                    Saving(_data);
-                    Console.Clear();
-                    Console.WriteLine("Данные отсортированы по году рождения!");
-                    break;
-                case 3:
-                    for (int i = 0; i < _data.Length; i++)
-                    {
-                        for (int j = i + 1; j < _data.Length; j++)
-                        {
-                            int result = String.Compare(_data[i].GetSeat().row, _data[j].GetSeat().row);
-                            if (result > 0)
-                            {
-                                buf_data = _data[i];
-                                _data[i] = _data[j];
-                                _data[j] = buf_data;
-                            }
-                        }
-                    }
-                    Saving(_data);
-                    Console.Clear();
-                    Console.WriteLine("Данные отсортированы по месту в самолете!");
-                    break;
-                case 4:
-                    for (int i = 0; i < _data.Length; i++)
-                    {
-                        for (int j = i + 1; j < _data.Length; j++)
-                        {
-                            int result = String.Compare(_data[i].GetSeat().comfortable, _data[j].GetSeat().comfortable);
-                            if (result > 0)
-                            {
-                                buf_data = _data[i];
-                                _data[i] = _data[j];
-                                _data[j] = buf_data;
-                            }
-                        }
-                    }
-                    Saving(_data);
-                    Console.Clear();
-                    Console.WriteLine("Данные отсортированы по месту в самолете!");
-                    break;
-                default:
-                    Console.WriteLine("Данные введены неверно!");
-                    break;
+                }
             }
+            Saving(_data);
+        }
 
+        public static void SortingDateAdmin(Data[] _data) //сортировка данных по году
+        {
+            Data buf_data;
+            for (int i = 0; i < _data.Length; i++)
+            {
+                for (int j = i + 1; j < _data.Length; j++)
+                {
+                    if (_data[i].GetDate().year > _data[j].GetDate().year)
+                    {
+                        buf_data = _data[i];
+                        _data[i] = _data[j];
+                        _data[j] = buf_data;
+                    }
+                }
+            }
+            Saving(_data);
+        }
+
+        public static void SortingSeatAdmin(Data[] _data) //сортировка данных по ряду в самолете
+        {
+            Data buf_data;
+            for (int i = 0; i < _data.Length; i++)
+            {
+                for (int j = i + 1; j < _data.Length; j++)
+                {
+                    int result = String.Compare(_data[i].GetSeat().row, _data[j].GetSeat().row);
+                    if (result > 0)
+                    {
+                        buf_data = _data[i];
+                        _data[i] = _data[j];
+                        _data[j] = buf_data;
+                    }
+                }
+            }
+            Saving(_data);
+        }
+
+        public static void SortingComfortSeatAdmin(Data[] _data) //сортировка данных по комфортности места
+        {
+            Data buf_data;
+            for (int i = 0; i < _data.Length; i++)
+            {
+                for (int j = i + 1; j < _data.Length; j++)
+                {
+                    int result = String.Compare(_data[i].GetSeat().comfortable, _data[j].GetSeat().comfortable);
+                    if (result > 0)
+                    {
+                        buf_data = _data[i];
+                        _data[i] = _data[j];
+                        _data[j] = buf_data;
+                    }
+                }
+            }
+            Saving(_data);
         }
 
         //ФУНКЦИИ, КОТОРЫЕ ВЫ СКАЗАЛИ ДОБАВИТЬ
@@ -835,6 +716,7 @@ namespace Booking.DataBase
             }
 
         }
+
         //ФУНКЦИИ, КОТОРЫЕ ВЫ СКАЗАЛИ ДОБАВИТЬ
     }
 }

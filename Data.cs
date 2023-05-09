@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -653,9 +653,7 @@ namespace Booking.DataBase
         public static void AddUser(ref Data[] _data,
         string _login, string _password,
         string _surname, string _name, string _patronymic,
-        int _day, int _month, int _year,
-        string _row, string _boon, string _comfortable,
-        int _IDeat) //добавить пользователя в БД
+        int _day, int _month, int _year) //добавить пользователя в БД
         {
             int NumOfAdded = _data.Length;//сколько объектов в массиве
 
@@ -687,11 +685,11 @@ namespace Booking.DataBase
                 user.month = _month;
                 user.year = _year;
 
-                seat.row = _row;
-                seat.boon = _boon;
-                seat.comfortable = _comfortable;
+                seat.row = "";
+                seat.boon = "";
+                seat.comfortable = "";
 
-                food.IDeat = _IDeat;
+                food.IDeat = 0;
 
                 time.clock = Time.Clock();
 
@@ -725,12 +723,12 @@ namespace Booking.DataBase
                 user.month = _month;
                 user.year = _year;
 
-                seat.row = _row;
-                seat.boon = _boon;
-                seat.comfortable = _comfortable;
+                seat.row = "";
+                seat.boon = "";
+                seat.comfortable = "";
 
 
-                food.IDeat = _IDeat;
+                food.IDeat = 0;
 
                 time.clock = Time.Clock();
 
@@ -792,6 +790,50 @@ namespace Booking.DataBase
                 }
             }
             reading.Close();
+        }
+
+        public static void SelectSeat(Data[] _data, string login, string _row, string _boon, string _comfortable)
+        //пользователю по логину передается его место
+        {
+            int[] result = new int[_data.Length];
+
+            for (int i = 0; i < _data.Length; i++)
+            {
+                string LoginCompare = _data[i].GetLogin().login;
+
+                result[i] = Convert.ToInt32(login.Equals(LoginCompare));
+
+                if (result[i] == 1)
+                {
+                    _data[i].seat.row = _row;
+                    _data[i].seat.boon = _boon;
+                    _data[i].seat.comfortable = _comfortable;
+                    Saving(_data);
+                    break;
+                }
+            }
+
+        }
+
+        public static void SelectMenu(Data[] _data, string login, int _IDeat)
+        //пользователю по логину передается его выбор меню
+        {
+            int[] result = new int[_data.Length];
+
+            for (int i = 0; i < _data.Length; i++)
+            {
+                string LoginCompare = _data[i].GetLogin().login;
+
+                result[i] = Convert.ToInt32(login.Equals(LoginCompare));
+
+                if (result[i] == 1)
+                {
+                    _data[i].food.IDeat = _IDeat;
+                    Saving(_data);
+                    break;
+                }
+            }
+
         }
         //ФУНКЦИИ, КОТОРЫЕ ВЫ СКАЗАЛИ ДОБАВИТЬ
     }

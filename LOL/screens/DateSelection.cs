@@ -39,7 +39,7 @@ namespace LOL
                 case ConsoleKey.Enter:
                     if (elements[selectedElemIndex] is Button)
                     {
-                        App.openPlaceSelectionScreen();
+                        App.openPlaceSelectionScreen((elements[0] as InputText).value);
                     }
                     break;
                 default:

@@ -4,7 +4,7 @@ namespace LOL
     {
         string hint;
 
-        string value = "";
+        public string value = "";
 
         public InputText(string hint, bool isActive = false) {
             this.hint = hint;

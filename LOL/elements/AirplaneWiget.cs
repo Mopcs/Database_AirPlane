@@ -1,10 +1,24 @@
-﻿using System.Xml.Linq;
-
-namespace LOL
+﻿namespace LOL
 {
     class AirplaneWiget : Element, IKeyController
     {
         public int activeIndex = 0;
+
+        private bool enableControls = true;
+
+        public string nameOfPlace { 
+            get
+            {
+                string toReturn = "";
+                int height = activeIndex / width;
+                int number = activeIndex % width + 1;
+                if (height == 0) toReturn = "F";
+                else if (height == 1) toReturn = "D";
+                else if (height == 2) toReturn = "C";
+                else if (height == 3) toReturn = "A";
+                return toReturn + number.ToString();
+            }
+        }
 
         private const int width = 20;
         private const int height = 9;
@@ -13,29 +27,30 @@ namespace LOL
         private const ConsoleColor extendedPlaceColor = ConsoleColor.Green;
         private const ConsoleColor commonPlaceColor = ConsoleColor.Magenta;
 
+        public AirplaneWiget(bool enableControls = true) { 
+            this.enableControls = enableControls;
+            activeIndex = App.placeIdx;
+        }
+
         public void onKeyPressed(ConsoleKeyInfo charKey)
         {
-            switch (charKey.Key)
-            {
-                case ConsoleKey.UpArrow:
-                    activeIndex = (activeIndex + width * 3) % 80;
-                    break;
-                case ConsoleKey.DownArrow:
-                    activeIndex = (activeIndex + width) % 80;
-                    break;
-                case ConsoleKey.LeftArrow:
-                    activeIndex = (activeIndex / width) * width + (activeIndex + width - 1) % width;
-                    break;
-                case ConsoleKey.RightArrow:
-                    activeIndex = (activeIndex / width) * width + (activeIndex + 1) % (width);
-                    break;
-                case ConsoleKey.Escape:
-                    App.openDateSelectionScreen();
-                    break;
-                case ConsoleKey.Enter:
-                    
-                    break;
-            }
+            
+                switch (charKey.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        activeIndex = (activeIndex + width * 3) % 80;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        activeIndex = (activeIndex + width) % 80;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        activeIndex = (activeIndex / width) * width + (activeIndex + width - 1) % width;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        activeIndex = (activeIndex / width) * width + (activeIndex + 1) % (width);
+                        break;
+                }
+            
         }
 
         override public void draw(int fromX = 0)
@@ -103,7 +118,7 @@ namespace LOL
                         System.Console.BackgroundColor = ConsoleColor.Black;
                     }
 
-                    Console.Write("0");
+                    Console.Write("■");
 
                     System.Console.ForegroundColor = ConsoleColor.White;
                     System.Console.BackgroundColor = ConsoleColor.Black;

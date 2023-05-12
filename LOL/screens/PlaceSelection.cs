@@ -6,9 +6,14 @@ namespace LOL
         {
             new AirplaneWiget()
         };
-
-        private int selectedElemIndex = 0;
+        
         private const int marginLeft = 20;
+        private string date;
+
+        public PlaceSelection(string date)
+        {
+            this.date = date;
+        }
 
         override public void draw()
         {
@@ -21,6 +26,18 @@ namespace LOL
         public void onKeyPressed(ConsoleKeyInfo charKey)
         {
             (elements[0] as IKeyController).onKeyPressed(charKey);
+            switch (charKey.Key)
+            {
+                case ConsoleKey.Escape:
+                    App.openDateSelectionScreen();
+                    break;
+                case ConsoleKey.Enter:
+                    App.place = (elements[0] as AirplaneWiget).nameOfPlace;
+                    App.date = date;
+                    App.placeIdx = (elements[0] as AirplaneWiget).activeIndex;
+                    App.openConfirmScreen();
+                    break;
+            }
         }
     }
 }
